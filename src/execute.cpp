@@ -42,7 +42,7 @@ uint32_t Core::alu_unit(const Instr &instr, uint32_t rs1_data, uint32_t rs2_data
   case AluOp::NONE:
     break;
   case AluOp::ADD: {
-    rd_data = // TODO:
+    rd_data = alu_s1 + alu_s2;// TODO:
     break;
   }
   case AluOp::SUB: {
