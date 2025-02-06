@@ -1,0 +1,584 @@
+1c1
+< Running tests/rv32ui-p-lw.hex..
+---
+> Running rv32ui-p-lw.hex..
+168c168
+< TRACE         34: Forwarding: x10, data: 0x0from EX (#32)
+---
+> TRACE         34: Forwarding: x10, data=0x0 from EX (#33)
+180c180
+< TRACE         36: Forwarding: x5, data: 0x800000d4from EX (#34)
+---
+> TRACE         36: Forwarding: x5, data=0x800000d4 from EX (#35)
+186c186
+< TRACE         37: Forwarding: x5, data: 0x800000e4from EX (#35)
+---
+> TRACE         37: Forwarding: x5, data=0x800000e4 from EX (#36)
+204c204
+< TRACE         40: Forwarding: x5, data: 0x800000e4from EX (#38)
+---
+> TRACE         40: Forwarding: x5, data=0x800000e4 from EX (#39)
+210c210
+< TRACE         41: Forwarding: x5, data: 0x800000f4from EX (#39)
+---
+> TRACE         41: Forwarding: x5, data=0x800000f4 from EX (#40)
+228c228
+< TRACE         44: Forwarding: x5, data: 0x800000f4from EX (#42)
+---
+> TRACE         44: Forwarding: x5, data=0x800000f4 from EX (#43)
+234c234
+< TRACE         45: Forwarding: x5, data: 0x80000114from EX (#43)
+---
+> TRACE         45: Forwarding: x5, data=0x80000114 from EX (#44)
+246c246
+< TRACE         47: Forwarding: x5, data: 0x80000000from EX (#45)
+---
+> TRACE         47: Forwarding: x5, data=0x80000000 from EX (#46)
+252c252
+< TRACE         48: Forwarding: x5, data: 0x7ffffffffrom EX (#46)
+---
+> TRACE         48: Forwarding: x5, data=0x7fffffff from EX (#47)
+264c264
+< TRACE         50: Forwarding: x5, data: 0x1ffrom EX (#48)
+---
+> TRACE         50: Forwarding: x5, data=0x1f from EX (#49)
+282c282
+< TRACE         53: Forwarding: x5, data: 0x80000118from EX (#51)
+---
+> TRACE         53: Forwarding: x5, data=0x80000118 from EX (#52)
+288c288
+< TRACE         54: Forwarding: x5, data: 0x8000012cfrom EX (#52)
+---
+> TRACE         54: Forwarding: x5, data=0x8000012c from EX (#53)
+317c317
+< TRACE         59: Forwarding: x5, data: 0x80000130from EX (#57)
+---
+> TRACE         59: Forwarding: x5, data=0x80000130 from EX (#58)
+323c323
+< TRACE         60: Forwarding: x5, data: 0x80000004from EX (#58)
+---
+> TRACE         60: Forwarding: x5, data=0x80000004 from EX (#59)
+335c335
+< TRACE         62: Forwarding: x10, data: 0x1from EX (#60)
+---
+> TRACE         62: Forwarding: x10, data=0x1 from EX (#61)
+341c341
+< TRACE         63: Forwarding: x10, data: 0x80000000from EX (#61)
+---
+> TRACE         63: Forwarding: x10, data=0x80000000 from EX (#62)
+356c356
+< TRACE         66: Forwarding: x5, data: 0x0from EX (#64)
+---
+> TRACE         66: Forwarding: x5, data=0x0 from EX (#65)
+375c375
+< TRACE         70: Forwarding: x5, data: 0x80000178from EX (#68)
+---
+> TRACE         70: Forwarding: x5, data=0x80000178 from EX (#69)
+381c381
+< TRACE         71: Forwarding: x5, data: 0x8000018cfrom EX (#69)
+---
+> TRACE         71: Forwarding: x5, data=0x8000018c from EX (#70)
+409c409
+< TRACE         76: Forwarding: x15, data: 0xff0000from EX (#74)
+---
+> TRACE         76: Forwarding: x15, data=0xff0000 from EX (#75)
+420c420
+< TRACE         78: Forwarding: x1, data: 0x80002198from EX (#76)
+---
+> TRACE         78: Forwarding: x1, data=0x80002198 from EX (#77)
+426c426
+< TRACE         79: Forwarding: x1, data: 0x80002000from EX (#77)
+---
+> TRACE         79: Forwarding: x1, data=0x80002000 from EX (#78)
+437c437
+< TRACE         81: Forwarding: x7, data: 0xff0000from EX (#79)
+---
+> TRACE         81: Forwarding: x7, data=0xff0000 from EX (#80)
+444c444
+< TRACE         82: Forwarding: x7, data: 0xff00fffrom EX (#80)
+---
+> TRACE         82: Forwarding: x7, data=0xff00ff from EX (#81)
+461c461
+< TRACE         85: Forwarding: x15, data: 0xff010000from EX (#83)
+---
+> TRACE         85: Forwarding: x15, data=0xff010000 from EX (#84)
+472c472
+< TRACE         87: Forwarding: x1, data: 0x800021bcfrom EX (#85)
+---
+> TRACE         87: Forwarding: x1, data=0x800021bc from EX (#86)
+478c478
+< TRACE         88: Forwarding: x1, data: 0x80002000from EX (#86)
+---
+> TRACE         88: Forwarding: x1, data=0x80002000 from EX (#87)
+489c489
+< TRACE         90: Forwarding: x7, data: 0xff010000from EX (#88)
+---
+> TRACE         90: Forwarding: x7, data=0xff010000 from EX (#89)
+496c496
+< TRACE         91: Forwarding: x7, data: 0xff00ff00from EX (#89)
+---
+> TRACE         91: Forwarding: x7, data=0xff00ff00 from EX (#90)
+513c513
+< TRACE         94: Forwarding: x15, data: 0xff01000from EX (#92)
+---
+> TRACE         94: Forwarding: x15, data=0xff01000 from EX (#93)
+524c524
+< TRACE         96: Forwarding: x1, data: 0x800021e0from EX (#94)
+---
+> TRACE         96: Forwarding: x1, data=0x800021e0 from EX (#95)
+530c530
+< TRACE         97: Forwarding: x1, data: 0x80002000from EX (#95)
+---
+> TRACE         97: Forwarding: x1, data=0x80002000 from EX (#96)
+541c541
+< TRACE         99: Forwarding: x7, data: 0xff01000from EX (#97)
+---
+> TRACE         99: Forwarding: x7, data=0xff01000 from EX (#98)
+548c548
+< TRACE        100: Forwarding: x7, data: 0xff00ff0from EX (#98)
+---
+> TRACE        100: Forwarding: x7, data=0xff00ff0 from EX (#99)
+565c565
+< TRACE        103: Forwarding: x15, data: 0xf00ff000from EX (#101)
+---
+> TRACE        103: Forwarding: x15, data=0xf00ff000 from EX (#102)
+576c576
+< TRACE        105: Forwarding: x1, data: 0x80002204from EX (#103)
+---
+> TRACE        105: Forwarding: x1, data=0x80002204 from EX (#104)
+582c582
+< TRACE        106: Forwarding: x1, data: 0x80002000from EX (#104)
+---
+> TRACE        106: Forwarding: x1, data=0x80002000 from EX (#105)
+593c593
+< TRACE        108: Forwarding: x7, data: 0xf00ff000from EX (#106)
+---
+> TRACE        108: Forwarding: x7, data=0xf00ff000 from EX (#107)
+600c600
+< TRACE        109: Forwarding: x7, data: 0xf00ff00ffrom EX (#107)
+---
+> TRACE        109: Forwarding: x7, data=0xf00ff00f from EX (#108)
+617c617
+< TRACE        112: Forwarding: x15, data: 0xff0000from EX (#110)
+---
+> TRACE        112: Forwarding: x15, data=0xff0000 from EX (#111)
+628c628
+< TRACE        114: Forwarding: x1, data: 0x80002228from EX (#112)
+---
+> TRACE        114: Forwarding: x1, data=0x80002228 from EX (#113)
+634c634
+< TRACE        115: Forwarding: x1, data: 0x8000200cfrom EX (#113)
+---
+> TRACE        115: Forwarding: x1, data=0x8000200c from EX (#114)
+645c645
+< TRACE        117: Forwarding: x7, data: 0xff0000from EX (#115)
+---
+> TRACE        117: Forwarding: x7, data=0xff0000 from EX (#116)
+652c652
+< TRACE        118: Forwarding: x7, data: 0xff00fffrom EX (#116)
+---
+> TRACE        118: Forwarding: x7, data=0xff00ff from EX (#117)
+669c669
+< TRACE        121: Forwarding: x15, data: 0xff010000from EX (#119)
+---
+> TRACE        121: Forwarding: x15, data=0xff010000 from EX (#120)
+680c680
+< TRACE        123: Forwarding: x1, data: 0x8000224cfrom EX (#121)
+---
+> TRACE        123: Forwarding: x1, data=0x8000224c from EX (#122)
+686c686
+< TRACE        124: Forwarding: x1, data: 0x8000200cfrom EX (#122)
+---
+> TRACE        124: Forwarding: x1, data=0x8000200c from EX (#123)
+697c697
+< TRACE        126: Forwarding: x7, data: 0xff010000from EX (#124)
+---
+> TRACE        126: Forwarding: x7, data=0xff010000 from EX (#125)
+704c704
+< TRACE        127: Forwarding: x7, data: 0xff00ff00from EX (#125)
+---
+> TRACE        127: Forwarding: x7, data=0xff00ff00 from EX (#126)
+721c721
+< TRACE        130: Forwarding: x15, data: 0xff01000from EX (#128)
+---
+> TRACE        130: Forwarding: x15, data=0xff01000 from EX (#129)
+732c732
+< TRACE        132: Forwarding: x1, data: 0x80002270from EX (#130)
+---
+> TRACE        132: Forwarding: x1, data=0x80002270 from EX (#131)
+738c738
+< TRACE        133: Forwarding: x1, data: 0x8000200cfrom EX (#131)
+---
+> TRACE        133: Forwarding: x1, data=0x8000200c from EX (#132)
+749c749
+< TRACE        135: Forwarding: x7, data: 0xff01000from EX (#133)
+---
+> TRACE        135: Forwarding: x7, data=0xff01000 from EX (#134)
+756c756
+< TRACE        136: Forwarding: x7, data: 0xff00ff0from EX (#134)
+---
+> TRACE        136: Forwarding: x7, data=0xff00ff0 from EX (#135)
+773c773
+< TRACE        139: Forwarding: x15, data: 0xf00ff000from EX (#137)
+---
+> TRACE        139: Forwarding: x15, data=0xf00ff000 from EX (#138)
+784c784
+< TRACE        141: Forwarding: x1, data: 0x80002294from EX (#139)
+---
+> TRACE        141: Forwarding: x1, data=0x80002294 from EX (#140)
+790c790
+< TRACE        142: Forwarding: x1, data: 0x8000200cfrom EX (#140)
+---
+> TRACE        142: Forwarding: x1, data=0x8000200c from EX (#141)
+801c801
+< TRACE        144: Forwarding: x7, data: 0xf00ff000from EX (#142)
+---
+> TRACE        144: Forwarding: x7, data=0xf00ff000 from EX (#143)
+808c808
+< TRACE        145: Forwarding: x7, data: 0xf00ff00ffrom EX (#143)
+---
+> TRACE        145: Forwarding: x7, data=0xf00ff00f from EX (#144)
+825c825
+< TRACE        148: Forwarding: x1, data: 0x800022b0from EX (#146)
+---
+> TRACE        148: Forwarding: x1, data=0x800022b0 from EX (#147)
+831c831
+< TRACE        149: Forwarding: x1, data: 0x80002000from EX (#147)
+---
+> TRACE        149: Forwarding: x1, data=0x80002000 from EX (#148)
+837c837
+< TRACE        150: Forwarding: x1, data: 0x80001fe0from EX (#148)
+---
+> TRACE        150: Forwarding: x1, data=0x80001fe0 from EX (#149)
+848c848
+< TRACE        152: Forwarding: x7, data: 0xff0000from EX (#150)
+---
+> TRACE        152: Forwarding: x7, data=0xff0000 from EX (#151)
+855c855
+< TRACE        153: Forwarding: x7, data: 0xff00fffrom EX (#151)
+---
+> TRACE        153: Forwarding: x7, data=0xff00ff from EX (#152)
+872c872
+< TRACE        156: Forwarding: x1, data: 0x800022d0from EX (#154)
+---
+> TRACE        156: Forwarding: x1, data=0x800022d0 from EX (#155)
+878c878
+< TRACE        157: Forwarding: x1, data: 0x80002000from EX (#155)
+---
+> TRACE        157: Forwarding: x1, data=0x80002000 from EX (#156)
+884c884
+< TRACE        158: Forwarding: x1, data: 0x80001ffdfrom EX (#156)
+---
+> TRACE        158: Forwarding: x1, data=0x80001ffd from EX (#157)
+895c895
+< TRACE        160: Forwarding: x7, data: 0xff010000from EX (#158)
+---
+> TRACE        160: Forwarding: x7, data=0xff010000 from EX (#159)
+902c902
+< TRACE        161: Forwarding: x7, data: 0xff00ff00from EX (#159)
+---
+> TRACE        161: Forwarding: x7, data=0xff00ff00 from EX (#160)
+924c924
+< TRACE        165: Forwarding: x1, data: 0x800022f4from EX (#163)
+---
+> TRACE        165: Forwarding: x1, data=0x800022f4 from EX (#164)
+930c930
+< TRACE        166: Forwarding: x1, data: 0x80002004from EX (#164)
+---
+> TRACE        166: Forwarding: x1, data=0x80002004 from EX (#165)
+935a936
+> TRACE        167: *** ID Stall: data hazard on rs1 (#166)
+939c940
+< TRACE        168: Forwarding: x14, data: 0xff00ff0from MEM (#165)
+---
+> TRACE        168: Forwarding: x14, data=0xff00ff0 from MEM (#166)
+948c949
+< TRACE        170: Forwarding: x7, data: 0xff01000from EX (#167)
+---
+> TRACE        170: Forwarding: x7, data=0xff01000 from EX (#168)
+955c956
+< TRACE        171: Forwarding: x7, data: 0xff00ff0from EX (#168)
+---
+> TRACE        171: Forwarding: x7, data=0xff00ff0 from EX (#169)
+973,974c974,975
+< TRACE        174: Forwarding: x4, data: 0x1from MEM (#170)
+< TRACE        174: Forwarding: x5, data: 0x2from EX (#171)
+---
+> TRACE        174: Forwarding: x4, data=0x1 from MEM (#172)
+> TRACE        174: Forwarding: x5, data=0x2 from EX (#172)
+989c990
+< TRACE        177: Forwarding: x1, data: 0x800022f4from EX (#174)
+---
+> TRACE        177: Forwarding: x1, data=0x800022f4 from EX (#175)
+994c995
+< TRACE        178: Forwarding: x1, data: 0x80002004from EX (#175)
+---
+> TRACE        178: Forwarding: x1, data=0x80002004 from EX (#176)
+999a1001
+> TRACE        179: *** ID Stall: data hazard on rs1 (#177)
+1003c1005
+< TRACE        180: Forwarding: x14, data: 0xff00ff0from MEM (#176)
+---
+> TRACE        180: Forwarding: x14, data=0xff00ff0 from MEM (#177)
+1012c1014
+< TRACE        182: Forwarding: x7, data: 0xff01000from EX (#178)
+---
+> TRACE        182: Forwarding: x7, data=0xff01000 from EX (#179)
+1019c1021
+< TRACE        183: Forwarding: x7, data: 0xff00ff0from EX (#179)
+---
+> TRACE        183: Forwarding: x7, data=0xff00ff0 from EX (#180)
+1037,1038c1039,1040
+< TRACE        186: Forwarding: x4, data: 0x2from MEM (#181)
+< TRACE        186: Forwarding: x5, data: 0x2from EX (#182)
+---
+> TRACE        186: Forwarding: x4, data=0x2 from MEM (#183)
+> TRACE        186: Forwarding: x5, data=0x2 from EX (#183)
+1060c1062
+< TRACE        190: Forwarding: x1, data: 0x80002324from EX (#186)
+---
+> TRACE        190: Forwarding: x1, data=0x80002324 from EX (#187)
+1066c1068
+< TRACE        191: Forwarding: x1, data: 0x80002008from EX (#187)
+---
+> TRACE        191: Forwarding: x1, data=0x80002008 from EX (#188)
+1077c1079
+< TRACE        193: Forwarding: x14, data: 0xf00ff00ffrom MEM (#188)
+---
+> TRACE        193: Forwarding: x14, data=0xf00ff00f from MEM (#190)
+1088c1090
+< TRACE        195: Forwarding: x7, data: 0xf00ff000from EX (#191)
+---
+> TRACE        195: Forwarding: x7, data=0xf00ff000 from EX (#192)
+1095c1097
+< TRACE        196: Forwarding: x7, data: 0xf00ff00ffrom EX (#192)
+---
+> TRACE        196: Forwarding: x7, data=0xf00ff00f from EX (#193)
+1113,1114c1115,1116
+< TRACE        199: Forwarding: x4, data: 0x1from MEM (#194)
+< TRACE        199: Forwarding: x5, data: 0x2from EX (#195)
+---
+> TRACE        199: Forwarding: x4, data=0x1 from MEM (#196)
+> TRACE        199: Forwarding: x5, data=0x2 from EX (#196)
+1129c1131
+< TRACE        202: Forwarding: x1, data: 0x80002324from EX (#198)
+---
+> TRACE        202: Forwarding: x1, data=0x80002324 from EX (#199)
+1134c1136
+< TRACE        203: Forwarding: x1, data: 0x80002008from EX (#199)
+---
+> TRACE        203: Forwarding: x1, data=0x80002008 from EX (#200)
+1145c1147
+< TRACE        205: Forwarding: x14, data: 0xf00ff00ffrom MEM (#200)
+---
+> TRACE        205: Forwarding: x14, data=0xf00ff00f from MEM (#202)
+1156c1158
+< TRACE        207: Forwarding: x7, data: 0xf00ff000from EX (#203)
+---
+> TRACE        207: Forwarding: x7, data=0xf00ff000 from EX (#204)
+1163c1165
+< TRACE        208: Forwarding: x7, data: 0xf00ff00ffrom EX (#204)
+---
+> TRACE        208: Forwarding: x7, data=0xf00ff00f from EX (#205)
+1181,1182c1183,1184
+< TRACE        211: Forwarding: x4, data: 0x2from MEM (#206)
+< TRACE        211: Forwarding: x5, data: 0x2from EX (#207)
+---
+> TRACE        211: Forwarding: x4, data=0x2 from MEM (#208)
+> TRACE        211: Forwarding: x5, data=0x2 from EX (#208)
+1204c1206
+< TRACE        215: Forwarding: x1, data: 0x80002358from EX (#211)
+---
+> TRACE        215: Forwarding: x1, data=0x80002358 from EX (#212)
+1210c1212
+< TRACE        216: Forwarding: x1, data: 0x80002000from EX (#212)
+---
+> TRACE        216: Forwarding: x1, data=0x80002000 from EX (#213)
+1237c1239
+< TRACE        221: Forwarding: x7, data: 0xff010000from EX (#217)
+---
+> TRACE        221: Forwarding: x7, data=0xff010000 from EX (#218)
+1244c1246
+< TRACE        222: Forwarding: x7, data: 0xff00ff00from EX (#218)
+---
+> TRACE        222: Forwarding: x7, data=0xff00ff00 from EX (#219)
+1262,1263c1264,1265
+< TRACE        225: Forwarding: x4, data: 0x1from MEM (#220)
+< TRACE        225: Forwarding: x5, data: 0x2from EX (#221)
+---
+> TRACE        225: Forwarding: x4, data=0x1 from MEM (#222)
+> TRACE        225: Forwarding: x5, data=0x2 from EX (#222)
+1278c1280
+< TRACE        228: Forwarding: x1, data: 0x80002358from EX (#224)
+---
+> TRACE        228: Forwarding: x1, data=0x80002358 from EX (#225)
+1283c1285
+< TRACE        229: Forwarding: x1, data: 0x80002000from EX (#225)
+---
+> TRACE        229: Forwarding: x1, data=0x80002000 from EX (#226)
+1310c1312
+< TRACE        234: Forwarding: x7, data: 0xff010000from EX (#230)
+---
+> TRACE        234: Forwarding: x7, data=0xff010000 from EX (#231)
+1317c1319
+< TRACE        235: Forwarding: x7, data: 0xff00ff00from EX (#231)
+---
+> TRACE        235: Forwarding: x7, data=0xff00ff00 from EX (#232)
+1335,1336c1337,1338
+< TRACE        238: Forwarding: x4, data: 0x2from MEM (#233)
+< TRACE        238: Forwarding: x5, data: 0x2from EX (#234)
+---
+> TRACE        238: Forwarding: x4, data=0x2 from MEM (#235)
+> TRACE        238: Forwarding: x5, data=0x2 from EX (#235)
+1358c1360
+< TRACE        242: Forwarding: x1, data: 0x80002390from EX (#238)
+---
+> TRACE        242: Forwarding: x1, data=0x80002390 from EX (#239)
+1364c1366
+< TRACE        243: Forwarding: x1, data: 0x80002004from EX (#239)
+---
+> TRACE        243: Forwarding: x1, data=0x80002004 from EX (#240)
+1375c1377
+< TRACE        245: Forwarding: x7, data: 0xff01000from EX (#241)
+---
+> TRACE        245: Forwarding: x7, data=0xff01000 from EX (#242)
+1382c1384
+< TRACE        246: Forwarding: x7, data: 0xff00ff0from EX (#242)
+---
+> TRACE        246: Forwarding: x7, data=0xff00ff0 from EX (#243)
+1400,1401c1402,1403
+< TRACE        249: Forwarding: x4, data: 0x1from MEM (#244)
+< TRACE        249: Forwarding: x5, data: 0x2from EX (#245)
+---
+> TRACE        249: Forwarding: x4, data=0x1 from MEM (#246)
+> TRACE        249: Forwarding: x5, data=0x2 from EX (#246)
+1416c1418
+< TRACE        252: Forwarding: x1, data: 0x80002390from EX (#248)
+---
+> TRACE        252: Forwarding: x1, data=0x80002390 from EX (#249)
+1421c1423
+< TRACE        253: Forwarding: x1, data: 0x80002004from EX (#249)
+---
+> TRACE        253: Forwarding: x1, data=0x80002004 from EX (#250)
+1432c1434
+< TRACE        255: Forwarding: x7, data: 0xff01000from EX (#251)
+---
+> TRACE        255: Forwarding: x7, data=0xff01000 from EX (#252)
+1439c1441
+< TRACE        256: Forwarding: x7, data: 0xff00ff0from EX (#252)
+---
+> TRACE        256: Forwarding: x7, data=0xff00ff0 from EX (#253)
+1457,1458c1459,1460
+< TRACE        259: Forwarding: x4, data: 0x2from MEM (#254)
+< TRACE        259: Forwarding: x5, data: 0x2from EX (#255)
+---
+> TRACE        259: Forwarding: x4, data=0x2 from MEM (#256)
+> TRACE        259: Forwarding: x5, data=0x2 from EX (#256)
+1480c1482
+< TRACE        263: Forwarding: x1, data: 0x800023bcfrom EX (#259)
+---
+> TRACE        263: Forwarding: x1, data=0x800023bc from EX (#260)
+1491c1493
+< TRACE        265: Forwarding: x1, data: 0x80002008from MEM (#260)
+---
+> TRACE        265: Forwarding: x1, data=0x80002008 from MEM (#262)
+1502c1504
+< TRACE        267: Forwarding: x7, data: 0xf00ff000from EX (#263)
+---
+> TRACE        267: Forwarding: x7, data=0xf00ff000 from EX (#264)
+1509c1511
+< TRACE        268: Forwarding: x7, data: 0xf00ff00ffrom EX (#264)
+---
+> TRACE        268: Forwarding: x7, data=0xf00ff00f from EX (#265)
+1527,1528c1529,1530
+< TRACE        271: Forwarding: x4, data: 0x1from MEM (#266)
+< TRACE        271: Forwarding: x5, data: 0x2from EX (#267)
+---
+> TRACE        271: Forwarding: x4, data=0x1 from MEM (#268)
+> TRACE        271: Forwarding: x5, data=0x2 from EX (#268)
+1543c1545
+< TRACE        274: Forwarding: x1, data: 0x800023bcfrom EX (#270)
+---
+> TRACE        274: Forwarding: x1, data=0x800023bc from EX (#271)
+1553c1555
+< TRACE        276: Forwarding: x1, data: 0x80002008from MEM (#271)
+---
+> TRACE        276: Forwarding: x1, data=0x80002008 from MEM (#273)
+1564c1566
+< TRACE        278: Forwarding: x7, data: 0xf00ff000from EX (#274)
+---
+> TRACE        278: Forwarding: x7, data=0xf00ff000 from EX (#275)
+1571c1573
+< TRACE        279: Forwarding: x7, data: 0xf00ff00ffrom EX (#275)
+---
+> TRACE        279: Forwarding: x7, data=0xf00ff00f from EX (#276)
+1589,1590c1591,1592
+< TRACE        282: Forwarding: x4, data: 0x2from MEM (#277)
+< TRACE        282: Forwarding: x5, data: 0x2from EX (#278)
+---
+> TRACE        282: Forwarding: x4, data=0x2 from MEM (#279)
+> TRACE        282: Forwarding: x5, data=0x2 from EX (#279)
+1612c1614
+< TRACE        286: Forwarding: x1, data: 0x800023ecfrom EX (#282)
+---
+> TRACE        286: Forwarding: x1, data=0x800023ec from EX (#283)
+1639c1641
+< TRACE        291: Forwarding: x7, data: 0xff010000from EX (#287)
+---
+> TRACE        291: Forwarding: x7, data=0xff010000 from EX (#288)
+1646c1648
+< TRACE        292: Forwarding: x7, data: 0xff00ff00from EX (#288)
+---
+> TRACE        292: Forwarding: x7, data=0xff00ff00 from EX (#289)
+1664,1665c1666,1667
+< TRACE        295: Forwarding: x4, data: 0x1from MEM (#290)
+< TRACE        295: Forwarding: x5, data: 0x2from EX (#291)
+---
+> TRACE        295: Forwarding: x4, data=0x1 from MEM (#292)
+> TRACE        295: Forwarding: x5, data=0x2 from EX (#292)
+1680c1682
+< TRACE        298: Forwarding: x1, data: 0x800023ecfrom EX (#294)
+---
+> TRACE        298: Forwarding: x1, data=0x800023ec from EX (#295)
+1706c1708
+< TRACE        303: Forwarding: x7, data: 0xff010000from EX (#299)
+---
+> TRACE        303: Forwarding: x7, data=0xff010000 from EX (#300)
+1713c1715
+< TRACE        304: Forwarding: x7, data: 0xff00ff00from EX (#300)
+---
+> TRACE        304: Forwarding: x7, data=0xff00ff00 from EX (#301)
+1731,1732c1733,1734
+< TRACE        307: Forwarding: x4, data: 0x2from MEM (#302)
+< TRACE        307: Forwarding: x5, data: 0x2from EX (#303)
+---
+> TRACE        307: Forwarding: x4, data=0x2 from MEM (#304)
+> TRACE        307: Forwarding: x5, data=0x2 from EX (#304)
+1749c1751
+< TRACE        310: Forwarding: x5, data: 0x8000241cfrom EX (#306)
+---
+> TRACE        310: Forwarding: x5, data=0x8000241c from EX (#307)
+1755c1757
+< TRACE        311: Forwarding: x5, data: 0x80002000from EX (#307)
+---
+> TRACE        311: Forwarding: x5, data=0x80002000 from EX (#308)
+1771,1772c1773,1774
+< TRACE        314: Forwarding: x2, data: 0x2from MEM (#309)
+< TRACE        314: Forwarding: x7, data: 0x2from EX (#310)
+---
+> TRACE        314: Forwarding: x2, data=0x2 from MEM (#311)
+> TRACE        314: Forwarding: x7, data=0x2 from EX (#311)
+1789c1791
+< TRACE        317: Forwarding: x5, data: 0x80002438from EX (#313)
+---
+> TRACE        317: Forwarding: x5, data=0x80002438 from EX (#314)
+1795c1797
+< TRACE        318: Forwarding: x5, data: 0x80002000from EX (#314)
+---
+> TRACE        318: Forwarding: x5, data=0x80002000 from EX (#315)
+1816,1817c1818,1819
+< TRACE        322: Forwarding: x2, data: 0x2from MEM (#317)
+< TRACE        322: Forwarding: x7, data: 0x2from EX (#318)
+---
+> TRACE        322: Forwarding: x2, data=0x2 from MEM (#319)
+> TRACE        322: Forwarding: x7, data=0x2 from EX (#319)

@@ -203,11 +203,10 @@ bool Core::data_forwarding(uint32_t reg, uint32_t* data) {
     auto& ex_instr = *ex_data.instr;
     // TODO: check data forwarding from EX/MEM
 
-    if(reg != 0  && ex_instr.getRd() == reg && ex_instr.getExeFlags().use_rd) {
-        if(!ex_instr.getExeFlags().is_load){
-            forwarded = true;
-            *data = ex_data.result; 
-        }
+    if(ex_instr.getRd() == reg && ex_instr.getExeFlags().use_rd) {
+        forwarded = true;
+        *data = ex_data.result; 
+        DT(3, "Forwarding: x" << std::dec << reg << ", data: 0x" << std::hex << *data  << "from EX" << std::dec << " (#" << ex_data.uuid << ")");;   
     }
   }
 
@@ -219,6 +218,7 @@ bool Core::data_forwarding(uint32_t reg, uint32_t* data) {
      if(reg != 0  && mem_instr.getRd() == reg && mem_instr.getExeFlags().use_rd) {
         forwarded = true;
         *data = mem_data.result; 
+        DT(3, "Forwarding: x" << std::dec << reg << ", data: 0x" << std::hex << *data  << "from MEM" << std::dec << " (#" << mem_data.uuid << ")");;   
     }
     
   }

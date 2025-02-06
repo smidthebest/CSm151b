@@ -236,7 +236,7 @@ std::shared_ptr<Instr> Core::decode(uint32_t instr_code) const {
       exe_flags.use_rs1 = 1;
       exe_flags.use_imm = 1;
       exe_flags.alu_s2_imm = 1;
-      imm = sext((instr_code >> (width_opcode + width_reg + width_reg + width_func3)) & mask_i_imm, width_i_imm);// TODO:
+      imm = sext((instr_code >> 20) & mask_i_imm, width_i_imm);// TODO:
       break;
     case Opcode::L:
     case Opcode::JALR: {
@@ -244,7 +244,7 @@ std::shared_ptr<Instr> Core::decode(uint32_t instr_code) const {
       exe_flags.use_rs1 = 1;
       exe_flags.use_imm = 1;
       exe_flags.alu_s2_imm = 1;
-      imm = sext((instr_code >> (width_opcode + width_reg + width_reg + width_func3)) & mask_i_imm, width_i_imm);// TODO:
+      imm = sext((instr_code >> 20) & mask_i_imm, width_i_imm);// TODO:
     } break;
     case Opcode::SYS: {
       exe_flags.use_imm = 1;
@@ -255,7 +255,7 @@ std::shared_ptr<Instr> Core::decode(uint32_t instr_code) const {
           exe_flags.use_rs1 = 1;
         }
       }
-      imm = sext((instr_code >> (width_opcode + width_reg + width_reg + width_func3)) & mask_i_imm, width_i_imm);// TODO:
+      imm = (instr_code >> 20) & mask_i_imm; // TODO:
     } break;
     case Opcode::FENCE:
       break;
@@ -289,7 +289,7 @@ std::shared_ptr<Instr> Core::decode(uint32_t instr_code) const {
     exe_flags.use_rd  = 1;
     exe_flags.use_imm = 1;
     exe_flags.alu_s2_imm = 1;
-    imm = sext((instr_code >> 12) & mask_j_imm, width_j_imm); // TODO:
+    imm = sext((instr_code >> 12) & mask_j_imm, width_j_imm) << 12; // TODO:
   } break;
 
   case InstType::J: {
@@ -358,7 +358,7 @@ std::shared_ptr<Instr> Core::decode(uint32_t instr_code) const {
   }
   case Opcode::B: {
     exe_flags.alu_s1_PC = 1;
-    alu_op = AluOp::SUB;// TODO:
+    alu_op = AluOp::ADD;// TODO:
     switch (func3) {
     case 0: br_op = BrOp::BEQ; break; 
     case 1: br_op = BrOp::BNE; break; 
