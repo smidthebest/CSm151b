@@ -186,8 +186,8 @@ bool Core::check_data_hazards(const Instr &instr) {
   if (!ex_mem_.empty()) {
     auto& ex_data = ex_mem_.data();
     // TODO: check LDAD instruction data hazards in EX/MEM
-    if((instr.getRs1() ==  ex_data.instr->getRd() && instr.getExeFlags().use_rs1)
-        || (instr.getRs2() == ex_data.instr->getRd() && instr.getExeFlags().use_rs2)){
+    if((instr.getRs1() ==  ex_data.instr->getRd() && exe_flags.use_rs1)
+        || (instr.getRs2() == ex_data.instr->getRd() && exe_flags.use_rs2)){
         if(ex_data.instr->getRd() != 0 && ex_data.instr->getExeFlags().is_load) return true; 
         }
   }
