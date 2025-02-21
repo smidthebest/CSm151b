@@ -102,7 +102,7 @@ GSharePlus::GSharePlus(uint32_t BTB_size, uint32_t BHR_size)
   tage_tbls_.resize(NUM_TBLS);
   for (int i = 0; i < NUM_TBLS; i++)
   {
-    tage_tbls_[i].resize(NUM_TBLS);
+    tage_tbls_[i].resize(TBL_SIZE);
   }
 }
 
@@ -205,8 +205,7 @@ void GSharePlus::update(uint32_t PC, uint32_t next_PC, bool taken)
         entry.counter--;
     }
 
-    bool new_prediction = (entry.counter >= SAT_THRESHOLD);
-    if (old_prediction == new_prediction)
+    if (old_prediction == taken)
     {
       if (entry.useful < USEFUL_MAX)
         entry.useful++;

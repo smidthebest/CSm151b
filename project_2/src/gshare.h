@@ -77,7 +77,7 @@ namespace tinyrv
 
     // TODO: extra credit component
   private: 
-    static const int NUM_TBLS = 3; 
+    static const int NUM_TBLS = 4; 
     // static const int HISTS[NUM_TBLS] = {16, 8, 4}; 
     static const uint32_t TBL_SIZE = 128; 
     static const uint32_t BASE_SIZE = 1024; 
