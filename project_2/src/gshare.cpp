@@ -82,13 +82,34 @@ void GShare::update(uint32_t PC, uint32_t next_PC, bool taken) {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-GSharePlus::GSharePlus(uint32_t BTB_size, uint32_t BHR_size) {
-  (void) BTB_size;
-  (void) BHR_size;
+GSharePlus::GSharePlus(uint32_t BTB_size, uint32_t BHR_size) 
+: GHR_(0)
+{
+  BTB_shift_ = log2ceil(BTB_size);
+  BTB_mask_ = BTB_size - 1;
+  BTB_.resize(BTB_size, GShare::BTB_entry_t{false, 0x0, 0x0});
+
+  base_tbl_.resize(BASE_SIZE, 0);
+
+  tage_tbls_.resize(NUM_TBLS);
+  for (int i = 0; i < NUM_TBLS; i++) {
+    tage_tbls_[i].resize(NUM_TBLS);
+  }
 }
 
 GSharePlus::~GSharePlus() {
   //--
+}
+
+int GSharePlus::computeTAGEIndex(uint32_t PC, uint32_t GHR, int history_length) const {
+  uint32_t h = GHR & ((1 << history_length) - 1);
+  uint32_t index = (PC ^ h ^ (history_length * 0x9e3779b9)) % TBL_SIZE;
+  return static_cast<int>(index);
+}
+
+uint8_t GSharePlus::computeTAG(uint32_t PC, uint32_t GHR, int history_length) const {
+  uint8_t tag = static_cast<uint8_t>((PC ^ (GHR >> history_length)) & 0xFF);
+  return tag;
 }
 
 uint32_t GSharePlus::predict(uint32_t PC) {
@@ -98,7 +119,10 @@ uint32_t GSharePlus::predict(uint32_t PC) {
   (void) next_PC;
   (void) predict_taken;
 
-  // TODO: extra credit component
+
+    for(int i = 0; i < NUM_TBLS; i++){
+        
+    }
 
   DT(3, "*** GShare+: predict PC=0x" << std::hex << PC << std::dec
         << ", next_PC=0x" << std::hex << next_PC << std::dec

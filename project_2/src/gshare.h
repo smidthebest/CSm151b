@@ -74,6 +74,37 @@ namespace tinyrv
     void update(uint32_t PC, uint32_t next_PC, bool taken) override;
 
     // TODO: extra credit component
+  private: 
+    static const int NUM_TBLS = 3; 
+    static const int HISTS[NUM_TBLS]; 
+    static const uint32_t TBL_SIZE = 128; 
+    static const uint32_t BASE_SIZE = 1024; 
+
+    static const int SAT_MAX = 3; 
+    static const int SAT_THRESHOLD = 2; 
+    static const int USEFUL_MAX = 3; 
+
+    struct TAGE_entry {
+        bool valid, 
+        uint8_t tag, 
+        int8_t counter, 
+        uint8_t useful 
+    }; 
+
+    std::vector<std::vector<TAGE_entry>> tage_tbls_; 
+    std::vector<uint8_t> base_tbl_; 
+
+    uint32_t GHR_; 
+    static const int GHR_LENGTH = 16;
+    static const uint32_t GHR_mask_ = (1 << GHR_LENGTH) - 1;
+
+    std::vector<BTB_entry_t> BTB_;
+    uint32_t BTB_shift_;
+    uint32_t BTB_mask_;
+
+    int computeTAGEIndex(uint32_t PC, uint32_t GHR, int history_length) const;
+    uint8_t computeTAG(uint32_t PC, uint32_t GHR, int history_length) const;
+
   };
 
 }
