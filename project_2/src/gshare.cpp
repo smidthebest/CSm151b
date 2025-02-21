@@ -42,7 +42,7 @@ uint32_t GShare::predict(uint32_t PC) {
   bool predict_taken = false;
 
   // TODO:
-  predict_taken = (PHT_[(((PC >> BTB_shift_) ^ BHR_) & BHR_mask_)] >= 2); 
+  predict_taken = (PHT_[(((PC >> 2) ^ BHR_) & BHR_mask_)] >= 2); 
 
   if(predict_taken){
     uint32_t btb_idx = (PC >> 2) & BTB_mask_; 
@@ -62,7 +62,7 @@ void GShare::update(uint32_t PC, uint32_t next_PC, bool taken) {
         << ", next_PC=0x" << std::hex << next_PC << std::dec
         << ", taken=" << taken);
 
-  uint32_t PHT_idx = (((PC >> BTB_shift_) ^ BHR_) & BHR_mask_); 
+  uint32_t PHT_idx = (((PC >> 2) ^ BHR_) & BHR_mask_); 
   if(taken){
     if(PHT_[PHT_idx] < 3) PHT_[PHT_idx]++; 
   }
