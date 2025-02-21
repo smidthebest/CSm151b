@@ -36,6 +36,13 @@ namespace tinyrv
     };
   };
 
+  struct BTB_entry_t
+  {
+    bool valid;
+    uint32_t tag;
+    uint32_t target;
+  };
+
   class GShare : public BranchPredictor
   {
   public:
@@ -47,12 +54,7 @@ namespace tinyrv
     void update(uint32_t PC, uint32_t next_PC, bool taken) override;
 
     // TODO: Add your own methods here
-    struct BTB_entry_t
-    {
-      bool valid;
-      uint32_t tag;
-      uint32_t target;
-    };
+   
   private:
     std::vector<BTB_entry_t> BTB_; 
     std::vector<uint8_t> PHT_; 
@@ -76,7 +78,7 @@ namespace tinyrv
     // TODO: extra credit component
   private: 
     static const int NUM_TBLS = 3; 
-    static const int HISTS[NUM_TBLS]; 
+    // static const int HISTS[NUM_TBLS] = {16, 8, 4}; 
     static const uint32_t TBL_SIZE = 128; 
     static const uint32_t BASE_SIZE = 1024; 
 
@@ -85,10 +87,10 @@ namespace tinyrv
     static const int USEFUL_MAX = 3; 
 
     struct TAGE_entry {
-        bool valid, 
-        uint8_t tag, 
-        int8_t counter, 
-        uint8_t useful 
+        bool valid; 
+        uint8_t tag;  
+        int8_t counter; 
+        uint8_t useful;  
     }; 
 
     std::vector<std::vector<TAGE_entry>> tage_tbls_; 
@@ -102,8 +104,8 @@ namespace tinyrv
     uint32_t BTB_shift_;
     uint32_t BTB_mask_;
 
-    int computeTAGEIndex(uint32_t PC, uint32_t GHR, int history_length) const;
-    uint8_t computeTAG(uint32_t PC, uint32_t GHR, int history_length) const;
+    int compute_idx(uint32_t PC, uint32_t GHR, int history_length) const;
+    uint8_t compute_tag(uint32_t PC, uint32_t GHR, int history_length) const;
 
   };
 
