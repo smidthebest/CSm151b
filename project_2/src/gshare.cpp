@@ -26,7 +26,7 @@ using namespace tinyrv;
 GShare::GShare(uint32_t BTB_size, uint32_t BHR_size)
    : BTB_(BTB_size, BTB_entry_t{false, 0x0, 0x0})
    , PHT_((1 << BHR_size), 0x0)
-    , BHR_(0x0)
+   , BHR_(0x0)
    , BTB_shift_(log2ceil(BTB_size))
    , BTB_mask_(BTB_size-1)
    , BHR_mask_((1 << BHR_size)-1) 
@@ -46,7 +46,7 @@ uint32_t GShare::predict(uint32_t PC) {
 
   if(predict_taken){
     uint32_t btb_idx = (PC >> 2) & BTB_mask_; 
-    if(BTB_[btb_idx].valid && PC == BTB_[btb_idx].tag){
+    if(BTB_[btb_idx].valid && (PC>>2) == BTB_[btb_idx].tag){
       next_PC = BTB_[btb_idx].target; 
     }
   }
@@ -74,7 +74,7 @@ void GShare::update(uint32_t PC, uint32_t next_PC, bool taken) {
   if(taken){
     BTB_[btb_idx].valid = true; 
     BTB_[btb_idx].target = next_PC; 
-    BTB_[btb_idx].tag = PC; 
+    BTB_[btb_idx].tag = (PC>>2); 
   }
 
   BHR_ = (BHR_ << 1 | taken) & BHR_mask_; 
