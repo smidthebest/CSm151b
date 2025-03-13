@@ -26,191 +26,285 @@
 
 using namespace tinyrv;
 
-namespace tinyrv {
+namespace tinyrv
+{
 
-static const std::unordered_map<Opcode, InstType> sc_instTable = {
-  {Opcode::R,     InstType::R},
-  {Opcode::L,     InstType::I},
-  {Opcode::I,     InstType::I},
-  {Opcode::S,     InstType::S},
-  {Opcode::B,     InstType::B},
-  {Opcode::LUI,   InstType::U},
-  {Opcode::AUIPC, InstType::U},
-  {Opcode::JAL,   InstType::J},
-  {Opcode::JALR,  InstType::I},
-  {Opcode::SYS,   InstType::I},
-  {Opcode::FENCE, InstType::I},
-};
+  static const std::unordered_map<Opcode, InstType> sc_instTable = {
+      {Opcode::R, InstType::R},
+      {Opcode::L, InstType::I},
+      {Opcode::I, InstType::I},
+      {Opcode::S, InstType::S},
+      {Opcode::B, InstType::B},
+      {Opcode::LUI, InstType::U},
+      {Opcode::AUIPC, InstType::U},
+      {Opcode::JAL, InstType::J},
+      {Opcode::JALR, InstType::I},
+      {Opcode::SYS, InstType::I},
+      {Opcode::FENCE, InstType::I},
+  };
 
-enum Constants {
-  width_opcode= 7,
-  width_reg   = 5,
-  width_func3 = 3,
-  width_func7 = 7,
-  width_i_imm = 12,
-  width_j_imm = 20,
+  enum Constants
+  {
+    width_opcode = 7,
+    width_reg = 5,
+    width_func3 = 3,
+    width_func7 = 7,
+    width_i_imm = 12,
+    width_j_imm = 20,
 
-  shift_opcode= 0,
-  shift_rd    = width_opcode,
-  shift_func3 = shift_rd + width_reg,
-  shift_rs1   = shift_func3 + width_func3,
-  shift_rs2   = shift_rs1 + width_reg,
-  shift_func2 = shift_rs2 + width_reg,
-  shift_func7 = shift_rs2 + width_reg,
+    shift_opcode = 0,
+    shift_rd = width_opcode,
+    shift_func3 = shift_rd + width_reg,
+    shift_rs1 = shift_func3 + width_func3,
+    shift_rs2 = shift_rs1 + width_reg,
+    shift_func2 = shift_rs2 + width_reg,
+    shift_func7 = shift_rs2 + width_reg,
 
-  mask_opcode = (1 << width_opcode)- 1,
-  mask_reg    = (1 << width_reg)   - 1,
-  mask_func3  = (1 << width_func3) - 1,
-  mask_func7  = (1 << width_func7) - 1,
-  mask_i_imm  = (1 << width_i_imm) - 1,
-  mask_j_imm  = (1 << width_j_imm) - 1,
-};
+    mask_opcode = (1 << width_opcode) - 1,
+    mask_reg = (1 << width_reg) - 1,
+    mask_func3 = (1 << width_func3) - 1,
+    mask_func7 = (1 << width_func7) - 1,
+    mask_i_imm = (1 << width_i_imm) - 1,
+    mask_j_imm = (1 << width_j_imm) - 1,
+  };
 
-static const char* op_string(const Instr &instr) {
-  auto opcode = instr.getOpcode();
-  auto func3  = instr.getFunc3();
-  auto func7  = instr.getFunc7();
-  auto imm    = instr.getImm();
+  static const char *op_string(const Instr &instr)
+  {
+    auto opcode = instr.getOpcode();
+    auto func3 = instr.getFunc3();
+    auto func7 = instr.getFunc7();
+    auto imm = instr.getImm();
 
-  switch (opcode) {
-  case Opcode::LUI:   return "LUI";
-  case Opcode::AUIPC: return "AUIPC";
-  case Opcode::R:
-    switch (func3) {
-    case 0: return func7 ? "SUB" : "ADD";
-    case 1: return "SLL";
-    case 2: return "SLT";
-    case 3: return "SLTU";
-    case 4: return "XOR";
-    case 5: return (func7 & 0x20) ? "SRA" : "SRL";
-    case 6: return "OR";
-    case 7: return "AND";
-    default:
-      std::abort();
-    }
-  case Opcode::I:
-    switch (func3) {
-    case 0: return "ADDI";
-    case 1: return "SLLI";
-    case 2: return "SLTI";
-    case 3: return "SLTIU";
-    case 4: return "XORI";
-    case 5: return (func7 & 0x20) ? "SRAI" : "SRLI";
-    case 6: return "ORI";
-    case 7: return "ANDI";
-    default:
-      std::abort();
-    }
-  case Opcode::B:
-    switch (func3) {
-    case 0: return "BEQ";
-    case 1: return "BNE";
-    case 4: return "BLT";
-    case 5: return "BGE";
-    case 6: return "BLTU";
-    case 7: return "BGEU";
-    default:
-      std::abort();
-    }
-  case Opcode::JAL:  return "JAL";
-  case Opcode::JALR: return "JALR";
-  case Opcode::L:
-    switch (func3) {
-    case 0: return "LB";
-    case 1: return "LH";
-    case 2: return "LW";
-    case 3: return "LD";
-    case 4: return "LBU";
-    case 5: return "LHU";
-    case 6: return "LWU";
-    default:
-      std::abort();
-    }
-  case Opcode::S:
-    switch (func3) {
-    case 0: return "SB";
-    case 1: return "SH";
-    case 2: return "SW";
-    case 3: return "SD";
-    default:
-      std::abort();
-    }
-  case Opcode::SYS:
-    switch (func3) {
-    case 0:
-      switch (imm) {
-      case 0x000: return "ECALL";
-      case 0x001: return "EBREAK";
-      case 0x002: return "URET";
-      case 0x102: return "SRET";
-      case 0x302: return "MRET";
+    switch (opcode)
+    {
+    case Opcode::LUI:
+      return "LUI";
+    case Opcode::AUIPC:
+      return "AUIPC";
+    case Opcode::R:
+      switch (func3)
+      {
+      case 0:
+        return func7 ? "SUB" : "ADD";
+      case 1:
+        return "SLL";
+      case 2:
+        return "SLT";
+      case 3:
+        return "SLTU";
+      case 4:
+        return "XOR";
+      case 5:
+        return (func7 & 0x20) ? "SRA" : "SRL";
+      case 6:
+        return "OR";
+      case 7:
+        return "AND";
       default:
         std::abort();
       }
-    case 1: return "CSRRW";
-    case 2: return "CSRRS";
-    case 3: return "CSRRC";
-    case 5: return "CSRRWI";
-    case 6: return "CSRRSI";
-    case 7: return "CSRRCI";
+    case Opcode::I:
+      switch (func3)
+      {
+      case 0:
+        return "ADDI";
+      case 1:
+        return "SLLI";
+      case 2:
+        return "SLTI";
+      case 3:
+        return "SLTIU";
+      case 4:
+        return "XORI";
+      case 5:
+        return (func7 & 0x20) ? "SRAI" : "SRLI";
+      case 6:
+        return "ORI";
+      case 7:
+        return "ANDI";
+      default:
+        std::abort();
+      }
+    case Opcode::B:
+      switch (func3)
+      {
+      case 0:
+        return "BEQ";
+      case 1:
+        return "BNE";
+      case 4:
+        return "BLT";
+      case 5:
+        return "BGE";
+      case 6:
+        return "BLTU";
+      case 7:
+        return "BGEU";
+      default:
+        std::abort();
+      }
+    case Opcode::JAL:
+      return "JAL";
+    case Opcode::JALR:
+      return "JALR";
+    case Opcode::L:
+      switch (func3)
+      {
+      case 0:
+        return "LB";
+      case 1:
+        return "LH";
+      case 2:
+        return "LW";
+      case 3:
+        return "LD";
+      case 4:
+        return "LBU";
+      case 5:
+        return "LHU";
+      case 6:
+        return "LWU";
+      default:
+        std::abort();
+      }
+    case Opcode::S:
+      switch (func3)
+      {
+      case 0:
+        return "SB";
+      case 1:
+        return "SH";
+      case 2:
+        return "SW";
+      case 3:
+        return "SD";
+      default:
+        std::abort();
+      }
+    case Opcode::SYS:
+      switch (func3)
+      {
+      case 0:
+        switch (imm)
+        {
+        case 0x000:
+          return "ECALL";
+        case 0x001:
+          return "EBREAK";
+        case 0x002:
+          return "URET";
+        case 0x102:
+          return "SRET";
+        case 0x302:
+          return "MRET";
+        default:
+          std::abort();
+        }
+      case 1:
+        return "CSRRW";
+      case 2:
+        return "CSRRS";
+      case 3:
+        return "CSRRC";
+      case 5:
+        return "CSRRWI";
+      case 6:
+        return "CSRRSI";
+      case 7:
+        return "CSRRCI";
+      default:
+        std::abort();
+      }
+    case Opcode::FENCE:
+      return "FENCE";
     default:
       std::abort();
     }
-  case Opcode::FENCE:
-    return "FENCE";
-  default:
-    std::abort();
   }
+
+  std::ostream &operator<<(std::ostream &os, const Instr &instr)
+  {
+    os << op_string(instr);
+    int sep = 0;
+
+    auto exec_flags = instr.getExeFlags();
+
+    if (exec_flags.use_rd)
+    {
+      if (sep++ != 0)
+      {
+        os << ", ";
+      }
+      else
+      {
+        os << " ";
+      }
+      os << "x" << std::dec << instr.getRd();
+    }
+
+    if (exec_flags.use_rs1)
+    {
+      if (sep++ != 0)
+      {
+        os << ", ";
+      }
+      else
+      {
+        os << " ";
+      }
+      os << "x" << std::dec << instr.getRs1();
+    }
+
+    if (exec_flags.use_rs2)
+    {
+      if (sep++ != 0)
+      {
+        os << ", ";
+      }
+      else
+      {
+        os << " ";
+      }
+      os << "x" << std::dec << instr.getRs2();
+    }
+
+    if (exec_flags.use_imm)
+    {
+      if (sep++ != 0)
+      {
+        os << ", ";
+      }
+      else
+      {
+        os << " ";
+      }
+      os << "0x" << std::hex << instr.getImm();
+    }
+
+    os << ", PC=0x" << std::hex << instr.getPC() << std::dec;
+
+    os << " (#" << instr.getId() << ")";
+
+    return os;
+  }
+
 }
 
-std::ostream &operator<<(std::ostream &os, const Instr &instr) {
-  os << op_string(instr);
-  int sep = 0;
-
-  auto exec_flags = instr.getExeFlags();
-
-  if (exec_flags.use_rd) {
-    if (sep++ != 0) { os << ", "; } else { os << " "; }
-    os << "x" << std::dec << instr.getRd();
-  }
-
-  if (exec_flags.use_rs1) {
-    if (sep++ != 0) { os << ", "; } else { os << " "; }
-    os << "x" << std::dec << instr.getRs1();
-  }
-
-  if (exec_flags.use_rs2) {
-    if (sep++ != 0) { os << ", "; } else { os << " "; }
-    os << "x" << std::dec << instr.getRs2();
-  }
-
-  if (exec_flags.use_imm) {
-    if (sep++ != 0) { os << ", "; } else { os << " "; }
-    os << "0x" << std::hex << instr.getImm();
-  }
-
-  os << ", PC=0x" << std::hex << instr.getPC() << std::dec;
-
-  os << " (#" << instr.getId() << ")";
-
-  return os;
-}
-
-}
-
-Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
+Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const
+{
   auto instr = std::make_shared<Instr>(uuid, PC);
   auto opcode = Opcode((instr_code >> shift_opcode) & mask_opcode);
 
   auto func3 = (instr_code >> shift_func3) & mask_func3;
   auto func7 = (instr_code >> shift_func7) & mask_func7;
 
-  auto rd  = (instr_code >> shift_rd)  & mask_reg;
+  auto rd = (instr_code >> shift_rd) & mask_reg;
   auto rs1 = (instr_code >> shift_rs1) & mask_reg;
   auto rs2 = (instr_code >> shift_rs2) & mask_reg;
 
   auto op_it = sc_instTable.find(opcode);
-  if (op_it == sc_instTable.end()) {
+  if (op_it == sc_instTable.end())
+  {
     std::cout << std::hex << "Error: invalid opcode: 0x" << static_cast<int>(opcode) << std::endl;
     return nullptr;
   }
@@ -222,105 +316,127 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
   // instruction type decoding
 
   auto inst_type = op_it->second;
-  switch (inst_type) {
+  switch (inst_type)
+  {
   case InstType::R:
-    exe_flags.use_rd  = 1;
+    exe_flags.use_rd = 1;
     exe_flags.use_rs1 = 1;
     exe_flags.use_rs2 = 1;
     break;
 
-  case InstType::I: {
-    switch (opcode) {
+  case InstType::I:
+  {
+    switch (opcode)
+    {
     case Opcode::I:
-      exe_flags.use_rd  = 1;
+      exe_flags.use_rd = 1;
       exe_flags.use_rs1 = 1;
       exe_flags.use_imm = 1;
       exe_flags.alu_s2_imm = 1;
-      if (func3 == 0x1 || func3 == 0x5) {
+      if (func3 == 0x1 || func3 == 0x5)
+      {
         // Shift instructions
         imm = rs2;
-      } else {
+      }
+      else
+      {
         auto imm12 = instr_code >> shift_rs2;
         imm = sext(imm12, width_i_imm);
       }
       break;
     case Opcode::L:
-    case Opcode::JALR: {
-      exe_flags.use_rd  = 1;
+    case Opcode::JALR:
+    {
+      exe_flags.use_rd = 1;
       exe_flags.use_rs1 = 1;
       exe_flags.use_imm = 1;
       exe_flags.alu_s2_imm = 1;
       auto imm12 = instr_code >> shift_rs2;
       imm = sext(imm12, width_i_imm);
-    } break;
-    case Opcode::SYS: {
+    }
+    break;
+    case Opcode::SYS:
+    {
       exe_flags.use_imm = 1;
       auto imm12 = instr_code >> shift_rs2;
-      if (func3 != 0) {
+      if (func3 != 0)
+      {
         // CSR instructions
         exe_flags.use_rd = 1;
-        if (func3 < 5) {
+        if (func3 < 5)
+        {
           exe_flags.use_rs1 = 1;
         }
       }
       imm = imm12;
-    } break;
+    }
+    break;
     case Opcode::FENCE:
       break;
     default:
       std::abort();
       break;
     }
-  } break;
-  case InstType::S: {
+  }
+  break;
+  case InstType::S:
+  {
     exe_flags.use_rs1 = 1;
     exe_flags.use_rs2 = 1;
     exe_flags.use_imm = 1;
     exe_flags.alu_s2_imm = 1;
     auto imm12 = (func7 << width_reg) | rd;
     imm = sext(imm12, width_i_imm);
-  } break;
+  }
+  break;
 
-  case InstType::B: {
+  case InstType::B:
+  {
     exe_flags.use_rs1 = 1;
     exe_flags.use_rs2 = 1;
     exe_flags.use_imm = 1;
     exe_flags.alu_s2_imm = 1;
-    auto bit_11   = rd & 0x1;
+    auto bit_11 = rd & 0x1;
     auto bits_4_1 = rd >> 1;
     auto bit_10_5 = func7 & 0x3f;
-    auto bit_12   = func7 >> 6;
+    auto bit_12 = func7 >> 6;
     auto imm12 = (bits_4_1 << 1) | (bit_10_5 << 5) | (bit_11 << 11) | (bit_12 << 12);
-    imm = sext(imm12, width_i_imm+1);
-  } break;
+    imm = sext(imm12, width_i_imm + 1);
+  }
+  break;
 
-  case InstType::U: {
-    exe_flags.use_rd  = 1;
+  case InstType::U:
+  {
+    exe_flags.use_rd = 1;
     exe_flags.use_imm = 1;
     exe_flags.alu_s2_imm = 1;
     auto imm20 = instr_code >> shift_func3;
     imm = imm20 << shift_func3;
-  } break;
+  }
+  break;
 
-  case InstType::J: {
-    exe_flags.use_rd  = 1;
+  case InstType::J:
+  {
+    exe_flags.use_rd = 1;
     exe_flags.use_imm = 1;
     exe_flags.alu_s2_imm = 1;
-    auto unordered  = instr_code >> shift_func3;
+    auto unordered = instr_code >> shift_func3;
     auto bits_19_12 = unordered & 0xff;
-    auto bit_11     = (unordered >> 8) & 0x1;
-    auto bits_10_1  = (unordered >> 9) & 0x3ff;
-    auto bit_20     = (unordered >> 19) & 0x1;
+    auto bit_11 = (unordered >> 8) & 0x1;
+    auto bits_10_1 = (unordered >> 9) & 0x3ff;
+    auto bit_20 = (unordered >> 19) & 0x1;
     auto imm20 = (bits_10_1 << 1) | (bit_11 << 11) | (bits_19_12 << 12) | (bit_20 << 20);
-    imm = sext(imm20, width_j_imm+1);
-  } break;
+    imm = sext(imm20, width_j_imm + 1);
+  }
+  break;
 
   default:
     std::abort();
   }
 
   // prevent write to x0
-  if (exe_flags.use_rd && rd == 0) {
+  if (exe_flags.use_rd && rd == 0)
+  {
     exe_flags.use_rd = 0;
   }
 
@@ -330,62 +446,78 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
   BrOp br_op = BrOp::NONE;
   FUType fu_type = FUType::NONE;
 
-  switch (opcode) {
-  case Opcode::LUI: {
+  switch (opcode)
+  {
+  case Opcode::LUI:
+  {
     // RV32I: LUI
     alu_op = AluOp::ADD;
     break;
   }
-  case Opcode::AUIPC: {
+  case Opcode::AUIPC:
+  {
     // RV32I: AUIPC
     alu_op = AluOp::ADD;
     exe_flags.alu_s1_PC = 1;
     break;
   }
   case Opcode::R:
-  case Opcode::I: {
-    switch (func3) {
-    case 0: {
-      if (opcode == Opcode::R && func7) {
+  case Opcode::I:
+  {
+    switch (func3)
+    {
+    case 0:
+    {
+      if (opcode == Opcode::R && func7)
+      {
         // RV32I: SUB
         alu_op = AluOp::SUB;
-      } else {
+      }
+      else
+      {
         // RV32I: ADD
         alu_op = AluOp::ADD;
       }
       break;
     }
-    case 1: {
+    case 1:
+    {
       // RV32I: SLL
       alu_op = AluOp::SLL;
       break;
     }
-    case 2: {
+    case 2:
+    {
       // RV32I: SLT
       alu_op = AluOp::LTI;
       break;
     }
-    case 3: {
+    case 3:
+    {
       // RV32I: SLTU
       alu_op = AluOp::LTU;
       break;
     }
-    case 4: {
+    case 4:
+    {
       // RV32I: XOR
       alu_op = AluOp::XOR;
       break;
     }
-    case 5: {
+    case 5:
+    {
       // RV32I: SRL, SRA
       alu_op = func7 ? AluOp::SRA : AluOp::SRL;
       break;
     }
-    case 6: {
+    case 6:
+    {
       // RV32I: OR
       alu_op = AluOp::OR;
       break;
     }
-    case 7: {
+    case 7:
+    {
       // RV32I: AND
       alu_op = AluOp::AND;
       break;
@@ -395,36 +527,44 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
     }
     break;
   }
-  case Opcode::B: {
+  case Opcode::B:
+  {
     exe_flags.alu_s1_PC = 1;
     alu_op = AluOp::ADD;
-    switch (func3) {
-    case 0: {
+    switch (func3)
+    {
+    case 0:
+    {
       // RV32I: BEQ
       br_op = BrOp::BEQ;
       break;
     }
-    case 1: {
+    case 1:
+    {
       // RV32I: BNE
       br_op = BrOp::BNE;
       break;
     }
-    case 4: {
+    case 4:
+    {
       // RV32I: BLT
       br_op = BrOp::BLT;
       break;
     }
-    case 5: {
+    case 5:
+    {
       // RV32I: BGE
       br_op = BrOp::BGE;
       break;
     }
-    case 6: {
+    case 6:
+    {
       // RV32I: BLTU
       br_op = BrOp::BLTU;
       break;
     }
-    case 7: {
+    case 7:
+    {
       // RV32I: BGEU
       br_op = BrOp::BGEU;
       break;
@@ -434,33 +574,40 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
     }
     break;
   }
-  case Opcode::JAL: {
+  case Opcode::JAL:
+  {
     exe_flags.alu_s1_PC = 1;
     alu_op = AluOp::ADD;
     br_op = BrOp::JAL;
     break;
   }
-  case Opcode::JALR: {
+  case Opcode::JALR:
+  {
     alu_op = AluOp::ADD;
     br_op = BrOp::JALR;
     break;
   }
-  case Opcode::L: {
+  case Opcode::L:
+  {
     // RV32I: LB, LH, LW, LBU, LHU
     alu_op = AluOp::ADD;
     exe_flags.is_load = 1;
     break;
   }
-  case Opcode::S: {
+  case Opcode::S:
+  {
     // RV32I: SB, SH, SW
     alu_op = AluOp::ADD;
     exe_flags.is_store = 1;
     break;
   }
-  case Opcode::SYS: {
-    if (func3 == 0) {
+  case Opcode::SYS:
+  {
+    if (func3 == 0)
+    {
       alu_op = AluOp::ADD;
-      switch (imm) {
+      switch (imm)
+      {
       case 0x000: // RV32I: ECALL
       case 0x001: // RV32I: EBREAK
         exe_flags.is_exit = 1;
@@ -472,39 +619,48 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
       default:
         std::abort();
       }
-    } else {
+    }
+    else
+    {
       exe_flags.is_csr = 1;
       exe_flags.alu_s2_csr = 1;
-      switch (func3) {
-      case 1: {
+      switch (func3)
+      {
+      case 1:
+      {
         // RV32I: CSRRW
         alu_op = AluOp::ADD;
         break;
       }
-      case 2: {
+      case 2:
+      {
         // RV32I: CSRRS
         alu_op = AluOp::OR;
         break;
       }
-      case 3: {
+      case 3:
+      {
         // RV32I: CSRRC
         alu_op = AluOp::AND;
         exe_flags.alu_s1_inv = 1;
         break;
       }
-      case 5: {
+      case 5:
+      {
         // RV32I: CSRRWI
         alu_op = AluOp::ADD;
         exe_flags.alu_s1_rs1 = 1;
         break;
       }
-      case 6: {
+      case 6:
+      {
         // RV32I: CSRRSI;
         alu_op = AluOp::OR;
         exe_flags.alu_s1_rs1 = 1;
         break;
       }
-      case 7: {
+      case 7:
+      {
         // RV32I: CSRRCI
         alu_op = AluOp::AND;
         exe_flags.alu_s1_inv = 1;
@@ -517,7 +673,8 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
     }
     break;
   }
-  case Opcode::FENCE: {
+  case Opcode::FENCE:
+  {
     // RV32I: FENCE
     break;
   }
@@ -530,6 +687,27 @@ Instr::Ptr Core::decode(uint32_t instr_code, uint32_t PC, uint64_t uuid) const {
   // We will executre CSR instructions on the Special Function Unit (SFU).
   // HINT: use the exe_flags as well
   // TODO:
+  // Functional unit type decoding
+  if (exe_flags.is_csr)
+  {
+    // CSR instructions go to Special Function Unit
+    fu_type = FUType::SFU;
+  }
+  else if (exe_flags.is_load || exe_flags.is_store)
+  {
+    // Load/Store instructions go to Load Store Unit
+    fu_type = FUType::LSU;
+  }
+  else if (br_op != BrOp::NONE)
+  {
+    // Branch/Jump instructions go to Branch Unit
+    fu_type = FUType::BRU;
+  }
+  else
+  {
+    // All other arithmetic/logic instructions go to ALU
+    fu_type = FUType::ALU;
+  }
 
   instr->setOpcode(opcode);
   instr->setRd(rd);
