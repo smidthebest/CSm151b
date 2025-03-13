@@ -156,7 +156,6 @@ void Core::execute() {
       if(!fu->busy()){
           fu->issue(entry.instr, entry.rob_index, rs_index, entry.rs1_data, entry.rs2_data); 
           entry.running = true; 
-          break; 
       }
         
     }
