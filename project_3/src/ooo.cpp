@@ -153,7 +153,7 @@ void Core::execute() {
     auto& entry = RS_.get_entry(rs_index);
     // TODO:
     if(entry.valid && !entry.running && entry.operands_ready() && !RS_.locked(rs_index)){
-      auto fu = FUs_.at((int)(entry.instr->getFUType())); 
+      auto& fu = FUs_.at((int)(entry.instr->getFUType())); 
       if(!fu->busy()){
           fu->issue(entry.instr, entry.rob_index, rs_index, entry.rs1_data, entry.rs2_data); 
           entry.running = true; 
