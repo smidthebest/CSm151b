@@ -42,12 +42,10 @@ public:
       if(rs1_index == data.rs_index){
         rs1_index = -1; 
         rs1_data = data.result; 
-        return; 
       }
       if(rs2_index == data.rs_index){
         rs2_index = -1; 
         rs2_data = data.result; 
-        return; 
       }
     }
   };
@@ -56,10 +54,10 @@ public:
 
   ~ReservationStation();
 
-  bool operands_ready(uint32_t index) const {
-    // are all operands ready?
-    // TODO:
-  }
+  // bool operands_ready(uint32_t index) const {
+  //   // are all operands ready?
+  //   // TODO:
+  // }
 
   const entry_t& get_entry(uint32_t index) const {
     return store_.at(index);

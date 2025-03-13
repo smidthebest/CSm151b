@@ -138,6 +138,7 @@ void Core::execute() {
     if(fu->done()){
         auto output = fu->get_output(); 
         fu->clear(); 
+        DT(2, "FU is done " << fu->done()); 
         CDB_.push(output.result, output.rob_index, output.rs_index); 
         break; 
     }
@@ -152,12 +153,13 @@ void Core::execute() {
     auto& entry = RS_.get_entry(rs_index);
     // TODO:
     if(entry.valid && !entry.running && entry.operands_ready() && !RS_.locked(rs_index)){
-        for (auto fu : FUs_){
-            if(!fu->busy()){
-                fu->issue(entry.instr, entry.rob_index, rs_index, entry.rs1_data, entry.rs1_data); 
-                break; 
-            }
-        }
+      auto fu = FUs_.at((int)(entry.instr->getFUType())); 
+      if(!fu->busy()){
+          fu->issue(entry.instr, entry.rob_index, rs_index, entry.rs1_data, entry.rs2_data); 
+          entry.running = true; 
+          break; 
+      }
+        
     }
   }
 }
@@ -179,6 +181,7 @@ void Core::writeback() {
   // free the RS entry associated with this CDB response
   // so that it can be used by other instructions
   // TODO:
+  DT(2, "cdb_data looks like " << cdb_data.rob_index << " " << cdb_data.rs_index); 
   RS_.release(cdb_data.rs_index); 
 
   // update ROB
@@ -188,6 +191,7 @@ void Core::writeback() {
   // clear CDB
   // TODO:
   CDB_.pop(); 
+  DT(2, "cdb is empty? it shoudl be" << CDB_.empty()); 
 
   RS_.dump();
 }
