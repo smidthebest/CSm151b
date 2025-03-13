@@ -35,7 +35,6 @@ ReservationStation::~ReservationStation() {}
 int ReservationStation::issue(int rob_index, int rs1_index, int rs2_index, uint32_t rs1_data, uint32_t rs2_data, Instr::Ptr instr) {
     assert(!this->full());
     int index = indices_[next_index_++];
-    // DT(2, "Next_index is = " << next_index_); 
     uint32_t barrier_id = 0;
     if (instr->getFUType() == FUType::LSU) {
       barrier_id = lsu_barrier_.tick();
@@ -47,7 +46,6 @@ int ReservationStation::issue(int rob_index, int rs1_index, int rs2_index, uint3
   }
 
   void ReservationStation::release(uint32_t index) {
-    DT(2, "We are releasing: " << index); 
     assert(!this->empty());
     auto& entry = store_.at(index);
     entry.valid = false;
